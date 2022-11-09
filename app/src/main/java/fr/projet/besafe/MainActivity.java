@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
         listView=(ListView)findViewById(R.id.listview);
 
-        selectAnnonces();
+        selectVilles();
 
         ArrayList<String> tmp = new ArrayList<>();
         if(listArrondissements.size() > 0){
@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void selectAnnonces(){
+    public void selectVilles(){
         try {
             Object result = new SelectItems().execute().get();
         } catch (ExecutionException e) {
@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
         protected Object doInBackground(Object[] objects)
         {
             JSONObject object=parser.makeHttpRequest("http://10.0.2.2/servicesBeSafe/arrondissement.php","GET",null);
-            System.out.println("objj");
+            //System.out.println("objj");
             System.out.println(object);
             try
             {
