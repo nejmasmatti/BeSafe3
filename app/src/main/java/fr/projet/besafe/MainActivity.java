@@ -3,11 +3,13 @@ package fr.projet.besafe;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -27,8 +29,14 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Arrondissement> listArrondissements = new ArrayList<>();
 
     private ProgressDialog dialog;
-    private JSONParser parser = new JSONParser();;
+    private JSONParser parser = new JSONParser();
+    ;
     private int cle;
+    Button bouton_alerte_vol;
+    Button bouton_alerte_physique;
+    Button bouton_alerte_verbale;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,10 +57,42 @@ public class MainActivity extends AppCompatActivity {
 
         listView.setAdapter(arrayAdapter);
 
+
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Toast.makeText(MainActivity.this,"Voici le degré d'incident dans cet arrondissement : " + listArrondissements.get(i).getDegreIncident(),Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        Button button_alerte_vol = (Button) findViewById(R.id.button_alerte_vol);
+        Button button_alerte_physique = (Button) findViewById(R.id.button_alerte_physique);
+        Button button_alerte_verbale = (Button) findViewById(R.id.button_alerte_verbale);
+
+        button_alerte_vol.setOnClickListener(new View.OnClickListener()
+
+        {
+            public void onClick (View v){
+                Intent button_alerte_vol= new Intent(MainActivity.this, AlerteVolActivity.class);
+                startActivity(button_alerte_vol);            }
+        });
+
+        button_alerte_physique.setOnClickListener(new View.OnClickListener()
+
+        {
+            public void onClick (View v){
+                Intent button_alerte_physique= new Intent(MainActivity.this, AlertePhysiqueActivity.class);
+                startActivity(button_alerte_physique);
+            }
+        });
+
+        button_alerte_verbale.setOnClickListener(new View.OnClickListener()
+
+        {
+            public void onClick (View v){
+                Intent button_alerte_verbale= new Intent(MainActivity.this, AlerteVerbaleActivity.class);
+                startActivity(button_alerte_verbale);
             }
         });
     }
@@ -122,6 +162,7 @@ public class MainActivity extends AppCompatActivity {
 
             return null;
         }
+
         @Override
         protected void onPostExecute(Object o) {
             super.onPostExecute(o);
@@ -129,4 +170,5 @@ public class MainActivity extends AppCompatActivity {
             resultConnection(cle);
         }
     }
+
 }
