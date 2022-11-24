@@ -16,6 +16,8 @@ import android.widget.Toast;
 
 import fr.projet.besafe.Services.ImportDataServices.Download;
 import fr.projet.besafe.Services.ImportDataServices.SendDataExcelBD;
+import fr.projet.besafe.model.AlertExcel;
+import fr.projet.besafe.model.Departement;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -29,7 +31,7 @@ import java.util.concurrent.ExecutionException;
 public class MainActivity extends AppCompatActivity {
 
     ListView listView;
-    ArrayList<Arrondissement> listArrondissements = new ArrayList<>();
+    ArrayList<Departement> listDepartement = new ArrayList<>();
 
     private ProgressDialog dialog;
     private JSONParser parser = new JSONParser();
@@ -45,14 +47,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        //downloadData();
+        downloadData();
     }
 
     public void downloadData(){
         File path = getApplicationContext().getCacheDir();
         String link = DATA_URL;
         System.out.println(path.getAbsolutePath());
-        File out = new File(path, "/text.xlsx");
+        File out = new File(path, "/BeSafe.xlsx");
         new Thread(new Download(link, out)).start();
     }
 
@@ -67,9 +69,9 @@ public class MainActivity extends AppCompatActivity {
         selectVilles();
 
         ArrayList<String> tmp = new ArrayList<>();
-        if(listArrondissements.size() > 0){
-            for (Arrondissement a : listArrondissements){
-                tmp.add(String.format("Ville : %s, Arr : %d", a.getName(), a.getArrondissement()));
+        if(listDepartement.size() > 0){
+            for (Departement a : listDepartement){
+                tmp.add(String.format("Code : %d, Libelle : %s", a.getCode(), a.getLibelle()));
             }
         }
         ArrayAdapter arrayAdapter=new ArrayAdapter(this,android.R.layout.simple_list_item_1,tmp);
@@ -81,7 +83,9 @@ public class MainActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(MainActivity.this,"Voici le degré d'incident dans cet arrondissement : " + listArrondissements.get(i).getDegreIncident(),Toast.LENGTH_SHORT).show();
+                Intent a = new Intent(MainActivity.this, DetailAlerteActivity.class);
+                a.putExtra("code", listDepartement.get(i).getCode());
+                startActivity(a);
             }
         });
 
@@ -158,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected Object doInBackground(Object[] objects)
         {
-            JSONObject object=parser.makeHttpRequest("http://10.0.2.2/servicesBeSafe/arrondissement.php","GET",null);
+            JSONObject object=parser.makeHttpRequest("http://10.0.2.2/servicesBeSafe/departement.php","GET",null);
             //System.out.println("objj");
             System.out.println(object);
             try
@@ -166,18 +170,18 @@ public class MainActivity extends AppCompatActivity {
                 cle = Integer.parseInt(String.valueOf(object.getInt("resultat")));
                 if(cle == 1)
                 {
-                    JSONArray arrondissements=object.getJSONArray("arrondissement");
-                    for(int i=0;i<arrondissements.length();i++ )
+                    JSONArray departements=object.getJSONArray("departement");
+                    for(int i=0;i<departements.length();i++ )
                     {
 
-                        JSONObject arrondissement=arrondissements.getJSONObject(i);
+                        JSONObject arrondissement=departements.getJSONObject(i);
 
 
-                        Arrondissement a =new Arrondissement();
-                        a.setArrondissement(arrondissement.getInt("idArrondissement"));
-                        a.setDegreIncident(arrondissement.getInt("degreIncident"));
+                        Departement a =new Departement();
+                        a.setCode(arrondissement.getInt("idDepartement"));
+                        a.setLibelle(arrondissement.getString("NomDepartement"));
 
-                        listArrondissements.add(a);
+                        listDepartement.add(a);
                     }
                 }
             }

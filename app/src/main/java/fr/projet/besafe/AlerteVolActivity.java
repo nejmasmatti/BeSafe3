@@ -48,12 +48,8 @@ public class AlerteVolActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 getLastLocation();
-
             }
         });
-
-
-
     }
 
     private void getLastLocation() {
@@ -75,9 +71,6 @@ public class AlerteVolActivity extends AppCompatActivity {
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }
-
-
-
                             }
                         }
                     });

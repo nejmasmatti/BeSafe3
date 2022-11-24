@@ -1,0 +1,123 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+
+
+IAlerte <|-- AlerteViolencePhysiqueActivity
+IAlerte <|-- AlerteViolenceVerbaleActivity
+IAlerte <|-- AlerteVolActivity
+User <-- IAlerte
+Position <-- IAlerte
+
+
+Arrondissement "0..*" <-- "1" MainActivity
+JSONParser "1" <-- "1" MainActivity
+AlerteVolActivity "1" <-- "1" MainActivity
+AlerteViolenceVerbaleActivity "1" <-- "1" MainActivity
+AlerteViolencePhysiqueActivity "1" <-- "1" MainActivity
+
+Adresse "1" <-- "1" Position
+IUser <|-- User
+
+
+
+interface IAlerte {
+    + String getDescription()
+    + int getDanger()
+}
+
+interface IUser {
+}
+
+
+
+
+class User {
+    - prenom : String
+    - nom : String
+    - id : int
+    - tabAlerte : ArrayList<IAlerte>
+    + this()
+}
+
+
+class AlerteVolActivity {
+    + this()
+    + askPermission() : void
+    + getLastLocation() : void
+    + onCreate(Bundle) : void
+    + onRequestPermissions() : void
+}
+
+class AlerteViolencePhysiqueActivity {
+    + this()
+    + askPermission() : void
+    + getLastLocation() : void
+    + onCreate(Bundle) : void
+    + onRequestPermissions() : void
+}
+
+class AlerteViolenceVerbaleActivity {
+    + this()
+    + askPermission() : void
+    + getLastLocation() : void
+    + onCreate(Bundle) : void
+    + onRequestPermissions() : void
+}
+
+
+class Arrondissement {
+    - nom : String
+    - arrondissement : int
+    - degreIncident : int
+    + this()
+}
+
+class MainActivity {
+    - listView : ListView<View>
+    - listArrondissement : ListView<Arrondissement>
+    - dialog : ProgressDialog
+    - cle : int
+    + selectAlerte() : void
+    + createDialog() : ProgressDialog
+    + resultConnexion(int) : void
+}
+
+
+class Position {
+    - longitude : float
+    - latitude : float
+    - altitude : float
+    - adresse : Adresse
+    + this()
+}
+
+class Adresse {
+    - ville : String
+    - rue : String
+    - numero : String
+    + this()
+}
+
+class JSONParser {
+    - conn : HttpURLConnection
+    - wr : DataOutputStream
+    - result : StringBuilder
+    - urlObj : URL
+    - jObj : JSONObject
+    - paramString : String
+    + makeHttpRequest(String, String, HashMap<String, String>) : JSONObject
+()
+}
+
+/'
+class Admin {
+    - id : int
+    - nom : String
+    - prenom : String
+    + this()
+}
+'/
+
+
+@enduml
