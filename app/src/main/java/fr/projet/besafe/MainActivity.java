@@ -115,14 +115,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Button b = findViewById(R.id.button);
-        b.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent a = new Intent(MainActivity.this, DetailAlerteActivity.class);
-                startActivity(a);
-            }
-        });
 
         SendDataExcelBD s = SendDataExcelBD.setPath(this, "test");
         s.setListAlertExel();

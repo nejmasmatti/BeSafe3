@@ -35,6 +35,7 @@
         <activity
             android:name=".AlerteVolActivity"
             android:exported="false" />
+        <activity
             android:name=".DetailAlerteActivity"
             android:exported="false">
             <meta-data
