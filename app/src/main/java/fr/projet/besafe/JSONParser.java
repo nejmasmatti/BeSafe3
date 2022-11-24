@@ -16,7 +16,10 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.HashMap;
+
+import fr.projet.besafe.model.AlertExcel;
 
 public class JSONParser {
     String charset = "UTF-8";
@@ -28,28 +31,51 @@ public class JSONParser {
     StringBuilder sbParams;
     String paramsString;
 
-    public JSONObject makeHttpRequest(String url, String method, HashMap<String, String> params)
+    public <A> JSONObject makeHttpRequest(String url, String method, HashMap<String, A> params)
     {
         sbParams = new StringBuilder();
 
         int i = 0;
         if(params != null){
-            for (Object key : params.keySet())
-            {
-                try
+            System.out.println("size : " + params.size());
+            if(params.size() > 1){
+                for (Object key : params.keySet())
                 {
-                    if (i != 0)
+                    try
                     {
-                        sbParams.append("&");
+                        if (i != 0)
+                        {
+                            sbParams.append("&");
+                        }
+                        sbParams.append(key).append("=").append(URLEncoder.encode((String) params.get(key).toString(), charset));
                     }
-                    sbParams.append(key).append("=").append(URLEncoder.encode((String) params.get(key), charset));
+                    catch (UnsupportedEncodingException e)
+                    {
+                        e.printStackTrace();
+                    }
+                    i++;
                 }
-                catch (UnsupportedEncodingException e)
-                {
-                    e.printStackTrace();
-                }
-                i++;
+                i = 0;
             }
+            else {
+                for (Object key : params.keySet()){
+
+                        if (i != 0)
+                        {
+                            sbParams.append("&");
+                        }
+                        StringBuilder alertE = new StringBuilder();
+                        A liste = params.get(key);
+                        for (AlertExcel a :(ArrayList<AlertExcel>) liste){
+                            alertE.append(a.getLibelleAlerte()).append(",").append(a.getNumDepartement()).append(",")
+                                    .append(a.getNbCrime()).append(",").append(a.getMois()).append(",")
+                                    .append(a.getAnnee()).append(";");
+                        }
+                        sbParams.append(key).append("=").append(alertE.toString());
+                }
+                i = 0;
+            }
+
         }
 
 
@@ -67,6 +93,7 @@ public class JSONParser {
                 conn.connect();
 
                 paramsString = sbParams.toString();
+                System.out.println("aaaaaaaaaaaaaa " + paramsString);
                 wr = new DataOutputStream(conn.getOutputStream());
                 wr.writeBytes(paramsString);
                 wr.flush();
@@ -82,9 +109,9 @@ public class JSONParser {
             // request method is GET
             if (sbParams.length() != 0)
             {
+                System.out.println("bbbbbbbbbbbbbbb " + sbParams);
                 url += "?" + sbParams.toString();
             }
-
             try
             {
                 urlObj = new URL(url);

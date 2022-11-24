@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -13,14 +14,16 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import fr.projet.besafe.JSONParser;
-import fr.projet.besafe.Arrondissement;
+import fr.projet.besafe.Services.ImportDataServices.Download;
+import fr.projet.besafe.Services.ImportDataServices.SendDataExcelBD;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
@@ -30,12 +33,28 @@ public class MainActivity extends AppCompatActivity {
 
     private ProgressDialog dialog;
     private JSONParser parser = new JSONParser();
-    ;
     private int cle;
     Button bouton_alerte_vol;
     Button bouton_alerte_physique;
     Button bouton_alerte_verbale;
 
+
+
+    private static final String DATA_URL = "https://static.data.gouv.fr/resources/chiffres-departementaux-mensuels-relatifs-aux-crimes-et-delits-enregistres-par-les-services-de-police-et-de-gendarmerie-depuis-janvier-1996/20221031-102847/tableaux-4001-ts.xlsx";
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        downloadData();
+    }
+
+    public void downloadData(){
+        File path = getApplicationContext().getCacheDir();
+        String link = DATA_URL;
+        System.out.println(path.getAbsolutePath());
+        File out = new File(path, "/text.xlsx");
+        new Thread(new Download(link, out)).start();
+    }
 
 
     @Override
@@ -95,6 +114,21 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(button_alerte_verbale);
             }
         });
+
+        Button b = findViewById(R.id.button);
+        b.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent a = new Intent(MainActivity.this, DetailAlerteActivity.class);
+                startActivity(a);
+            }
+        });
+
+        SendDataExcelBD s = SendDataExcelBD.setPath(this, "test");
+        s.setListAlertExel();
+        s.sendAlert();
+
+
     }
 
     public void selectVilles(){
