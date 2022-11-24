@@ -12,3 +12,5 @@ Emulateur
 Java 
 Gradle
 
+Installation ANDROID SDK + gradle
+
