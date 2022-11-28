@@ -31,8 +31,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.ExecutionException;
 
-import fr.projet.besafe.Services.ImportDataServices.SendDataAlerte;
-
 public class AlerteVolActivity extends AppCompatActivity {
     FusedLocationProviderClient fusedLocationProviderClient;
     TextView  city, address, longitude, latitude;
