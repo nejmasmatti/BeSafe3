@@ -1,4 +1,4 @@
-package fr.projet.besafe;
+package fr.projet.besafe.model;
 
 public class Adresse {
     private String ville;

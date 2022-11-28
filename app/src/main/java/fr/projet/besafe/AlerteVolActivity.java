@@ -63,7 +63,6 @@ public class AlerteVolActivity extends AppCompatActivity {
                                 List<Address> addresses = null;
                                 try {
                                     addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-                                    System.out.println("aaaaaaaaaaaaaaaaaa " + addresses.get(0).getAddressLine(0));
                                     latitude.setText("latitude : " + addresses.get(0).getLatitude());
                                     longitude.setText("longitude : " + addresses.get(0).getLongitude());
                                     address.setText("address :" + addresses.get(0).getAddressLine(0));
@@ -95,10 +94,6 @@ public class AlerteVolActivity extends AppCompatActivity {
                 Toast.makeText(this, "Required Permission", Toast.LENGTH_SHORT).show();
             }
         }
-
-
-
-
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 }
