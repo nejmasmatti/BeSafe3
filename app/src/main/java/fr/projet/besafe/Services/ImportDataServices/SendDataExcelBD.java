@@ -3,19 +3,16 @@ package fr.projet.besafe.Services.ImportDataServices;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
-import fr.projet.besafe.Arrondissement;
 import fr.projet.besafe.JSONParser;
 import fr.projet.besafe.MainActivity;
-import fr.projet.besafe.model.AlertExcel;
+import fr.projet.besafe.model.AlertExcel.AlertExcel;
 
 public class SendDataExcelBD {
     //traitement + l'envoie des données de l'excel en BD

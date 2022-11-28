@@ -19,7 +19,7 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import fr.projet.besafe.model.AlertExcel;
+import fr.projet.besafe.model.AlertExcel.AlertExcel;
 
 public class JSONParser {
     String charset = "UTF-8";
@@ -38,7 +38,6 @@ public class JSONParser {
         int i = 0;
         if(params != null){
             System.out.println("size : " + params.size());
-            if(params.size() > 1){
                 for (Object key : params.keySet())
                 {
                     try
@@ -47,6 +46,18 @@ public class JSONParser {
                         {
                             sbParams.append("&");
                         }
+
+                        if(params.get(key) instanceof ArrayList){
+                            StringBuilder alertE = new StringBuilder();
+                            A liste = params.get(key);
+                            for (AlertExcel a :(ArrayList<AlertExcel>) liste){
+                                alertE.append(a.getLibelleAlerte()).append(",").append(a.getNumDepartement()).append(",")
+                                        .append(a.getNbCrime()).append(",").append(a.getMois()).append(",")
+                                        .append(a.getAnnee()).append(";");
+                            }
+                            sbParams.append(key).append("=").append(alertE.toString());
+                        }
+
                         sbParams.append(key).append("=").append(URLEncoder.encode((String) params.get(key).toString(), charset));
                     }
                     catch (UnsupportedEncodingException e)
@@ -56,25 +67,6 @@ public class JSONParser {
                     i++;
                 }
                 i = 0;
-            }
-            else {
-                for (Object key : params.keySet()){
-
-                        if (i != 0)
-                        {
-                            sbParams.append("&");
-                        }
-                        StringBuilder alertE = new StringBuilder();
-                        A liste = params.get(key);
-                        for (AlertExcel a :(ArrayList<AlertExcel>) liste){
-                            alertE.append(a.getLibelleAlerte()).append(",").append(a.getNumDepartement()).append(",")
-                                    .append(a.getNbCrime()).append(",").append(a.getMois()).append(",")
-                                    .append(a.getAnnee()).append(";");
-                        }
-                        sbParams.append(key).append("=").append(alertE.toString());
-                }
-                i = 0;
-            }
 
         }
 

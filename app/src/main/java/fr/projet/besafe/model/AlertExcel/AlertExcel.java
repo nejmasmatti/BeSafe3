@@ -1,16 +1,20 @@
-package fr.projet.besafe.model;
+package fr.projet.besafe.model.AlertExcel;
 
 import java.util.ArrayList;
 import java.util.Map;
 
 public class AlertExcel {
-
+    private int idAlert;
     private String libelleAlerte;
     private int numDepartement;
     private int nbCrime;
     private int mois;
     private int annee;
 
+
+    public AlertExcel(){
+
+    }
 
     public AlertExcel(String libelleAlerte, int numDepartement, int nbCrime, int mois, int annee){
         this.libelleAlerte = libelleAlerte;
@@ -20,6 +24,14 @@ public class AlertExcel {
         this.mois = mois;
     }
 
+
+    public int getIdAlert() {
+        return idAlert;
+    }
+
+    public void setIdAlert(int idAlerte) {
+        this.idAlert = idAlerte;
+    }
 
     public int getNumDepartement() {
         return numDepartement;
