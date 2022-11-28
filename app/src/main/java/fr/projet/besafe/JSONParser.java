@@ -38,32 +38,16 @@ public class JSONParser {
         int i = 0;
         if(params != null){
             System.out.println("size : " + params.size());
-            if(params.size() > 1){
-                for (Object key : params.keySet())
+            for (Object key : params.keySet())
+            {
+                try
                 {
-                    try
+                    if (i != 0)
                     {
-                        if (i != 0)
-                        {
-                            sbParams.append("&");
-                        }
-                        sbParams.append(key).append("=").append(URLEncoder.encode((String) params.get(key).toString(), charset));
+                        sbParams.append("&");
                     }
-                    catch (UnsupportedEncodingException e)
-                    {
-                        e.printStackTrace();
-                    }
-                    i++;
-                }
-                i = 0;
-            }
-            else {
-                for (Object key : params.keySet()){
 
-                        if (i != 0)
-                        {
-                            sbParams.append("&");
-                        }
+                    if(params.get(key) instanceof ArrayList){
                         StringBuilder alertE = new StringBuilder();
                         A liste = params.get(key);
                         for (AlertExcel a :(ArrayList<AlertExcel>) liste){
@@ -72,9 +56,17 @@ public class JSONParser {
                                     .append(a.getAnnee()).append(";");
                         }
                         sbParams.append(key).append("=").append(alertE.toString());
+                    }
+
+                    sbParams.append(key).append("=").append(URLEncoder.encode((String) params.get(key).toString(), charset));
                 }
-                i = 0;
+                catch (UnsupportedEncodingException e)
+                {
+                    e.printStackTrace();
+                }
+                i++;
             }
+            i = 0;
 
         }
 
