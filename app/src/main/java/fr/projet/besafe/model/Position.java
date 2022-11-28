@@ -1,4 +1,6 @@
-package fr.projet.besafe;
+package fr.projet.besafe.model;
+
+import fr.projet.besafe.model.Adresse;
 
 public class Position {
     private float longitude;

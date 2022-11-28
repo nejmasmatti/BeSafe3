@@ -19,7 +19,7 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import fr.projet.besafe.model.AlertExcel;
+import fr.projet.besafe.model.AlertExcel.AlertExcel;
 
 public class JSONParser {
     String charset = "UTF-8";
@@ -31,42 +31,42 @@ public class JSONParser {
     StringBuilder sbParams;
     String paramsString;
 
-    public <A> JSONObject makeHttpRequest(String url, String method, HashMap<String, A> params)
+public <A> JSONObject makeHttpRequest(String url, String method, HashMap<String, A> params)
     {
         sbParams = new StringBuilder();
 
         int i = 0;
         if(params != null){
             System.out.println("size : " + params.size());
-            for (Object key : params.keySet())
-            {
-                try
+                for (Object key : params.keySet())
                 {
-                    if (i != 0)
+                    try
                     {
-                        sbParams.append("&");
-                    }
-
-                    if(params.get(key) instanceof ArrayList){
-                        StringBuilder alertE = new StringBuilder();
-                        A liste = params.get(key);
-                        for (AlertExcel a :(ArrayList<AlertExcel>) liste){
-                            alertE.append(a.getLibelleAlerte()).append(",").append(a.getNumDepartement()).append(",")
-                                    .append(a.getNbCrime()).append(",").append(a.getMois()).append(",")
-                                    .append(a.getAnnee()).append(";");
+                        if (i != 0)
+                        {
+                            sbParams.append("&");
                         }
-                        sbParams.append(key).append("=").append(alertE.toString());
-                    }
 
-                    sbParams.append(key).append("=").append(URLEncoder.encode((String) params.get(key).toString(), charset));
+                        if(params.get(key) instanceof ArrayList){
+                            StringBuilder alertE = new StringBuilder();
+                            A liste = params.get(key);
+                            for (AlertExcel a :(ArrayList<AlertExcel>) liste){
+                                alertE.append(a.getLibelleAlerte()).append(",").append(a.getNumDepartement()).append(",")
+                                        .append(a.getNbCrime()).append(",").append(a.getMois()).append(",")
+                                        .append(a.getAnnee()).append(";");
+                            }
+                            sbParams.append(key).append("=").append(alertE.toString());
+                        }
+
+                        sbParams.append(key).append("=").append(URLEncoder.encode((String) params.get(key).toString(), charset));
+                    }
+                    catch (UnsupportedEncodingException e)
+                    {
+                        e.printStackTrace();
+                    }
+                    i++;
                 }
-                catch (UnsupportedEncodingException e)
-                {
-                    e.printStackTrace();
-                }
-                i++;
-            }
-            i = 0;
+                i = 0;
 
         }
 

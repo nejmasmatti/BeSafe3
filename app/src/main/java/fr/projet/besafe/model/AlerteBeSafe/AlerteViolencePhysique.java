@@ -1,6 +1,6 @@
-package fr.projet.besafe;
+package fr.projet.besafe.model.AlerteBeSafe;
 
-public class AlerteViolencePhysique implements IAlerte{
+public class AlerteViolencePhysique implements IAlerte {
 
     public AlerteViolencePhysique () {
 
@@ -12,7 +12,7 @@ public class AlerteViolencePhysique implements IAlerte{
     }
 
     @Override
-    public String getDanger() {
-        return null;
+    public int getDanger() {
+        return 0;
     }
 }
