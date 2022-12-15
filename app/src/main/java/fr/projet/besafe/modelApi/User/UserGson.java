@@ -1,17 +1,31 @@
-package fr.projet.besafe.model.User;
+package fr.projet.besafe.modelApi.User;
 
-public class User {
+import fr.projet.besafe.model.User.User;
+import fr.projet.besafe.modelApi.AReponseApi;
+
+public class UserGson extends AReponseApi {
+
     private String token;
     private int id;
     private String name;
     private String email;
 
 
-    public User(String token, int id, String name, String email){
+    public UserGson(boolean success, String message, String token, int id, String name, String email){
+        super(success, message);
         this.token = token;
         this.id = id;
         this.name = name;
         this.email = email;
+    }
+
+    public User toUser(){
+        return new User(
+                this.token,
+                this.id,
+                this.name,
+                this.email
+        );
     }
 
     public String getToken() {
@@ -45,4 +59,5 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
+
 }

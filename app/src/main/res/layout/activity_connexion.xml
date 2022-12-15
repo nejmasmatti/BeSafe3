@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ConnexionActivity">
+
+    <TextView
+        android:id="@+id/txtconnexion"
+        android:layout_width="113dp"
+        android:layout_height="30dp"
+        android:layout_centerHorizontal="true"
+        android:text="Connexion"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        tools:layout_editor_absoluteX="99dp"
+        android:layout_marginTop="30dp"
+        tools:layout_editor_absoluteY="87dp" />
+
+    <TextView
+        android:id="@+id/txtlogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtconnexion"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="150dp"
+        android:text="Email"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+
+    <TextView
+        android:id="@+id/txtpass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtlogin"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="71dp"
+        android:text="Password" />
+
+    <EditText
+        android:id="@+id/edtlogin"
+        android:layout_width="337dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtlogin"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="2dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:minHeight="48dp"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <EditText
+        android:id="@+id/edtpass"
+        android:layout_width="323dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtpass"
+        android:layout_marginLeft="50dp"
+        android:ems="10"
+        android:inputType="textPassword"
+        android:minHeight="48dp" />
+
+    <Button
+        android:id="@+id/btnconn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edtpass"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="35dp"
+        android:text="Connexion" />
+
+</RelativeLayout>
