@@ -6,6 +6,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -49,6 +50,14 @@ public class AlerteVolActivity extends AppCompatActivity {
         longitude = findViewById(R.id.longitude);
         latitude = findViewById(R.id.latitude);
         nivDanger = findViewById(R.id.nivDanger);
+
+        Bundle message = getIntent().getExtras();
+        if (message != null) {
+            city.setText(message.getString("keyCity"));
+            address.setText(message.getString("keyAddress"));
+            latitude.setText(String.valueOf(message.getDouble("keyLat")));
+            longitude.setText(String.valueOf(message.getDouble("keyLng")));
+        }
 
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
@@ -162,7 +171,7 @@ public class AlerteVolActivity extends AppCompatActivity {
         {
             final String SEPARATEUR = " ";
 
-            String mots[] = addresses.get(0).getAddressLine(0).split(SEPARATEUR);
+            String mots[] = address.getText().toString().split(SEPARATEUR);
             String reste="";
 
             for (int i = 1; i < mots.length; i++) {
@@ -178,11 +187,11 @@ public class AlerteVolActivity extends AppCompatActivity {
             HashMap<String, String> mapDataAlertUser = new HashMap<>();
             mapDataAlertUser.put("nivDanger", nivDanger.getText().toString());
             mapDataAlertUser.put("RefUser", "1");
-            mapDataAlertUser.put("latitude", String.valueOf(addresses.get(0).getLatitude()));
-            mapDataAlertUser.put("longitude", String.valueOf(addresses.get(0).getLongitude()));
+            mapDataAlertUser.put("latitude", latitude.getText().toString());
+            mapDataAlertUser.put("longitude", longitude.getText().toString());
             mapDataAlertUser.put("Numero", mots[0]);
             mapDataAlertUser.put("Rue", reste);
-            mapDataAlertUser.put("nomVille", String.valueOf(addresses.get(0).getLocality()));
+            mapDataAlertUser.put("nomVille", city.getText().toString());
 
 
 
