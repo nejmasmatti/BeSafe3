@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        downloadData();
+        //downloadData();
     }
 
     public void downloadData(){
@@ -97,7 +97,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(button_carte);
             }
         });
-
 
         //SendDataExcelBD s = SendDataExcelBD.setPath(this, "test");
         //s.setListAlertExel();
