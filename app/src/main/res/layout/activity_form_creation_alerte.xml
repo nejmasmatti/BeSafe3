@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".FormCreationAlerte">
+
+    <TextView
+        android:id="@+id/txtTypeAlerte"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text="Type d'alertes"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+    <LinearLayout
+        android:id="@+id/layoutBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtTypeAlerte"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:gravity="start">
+
+        <RadioGroup
+            android:id="@+id/radioGroupTypesAlertes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <RadioButton
+                android:id="@+id/radiobtnAlerteV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Vol"/>
+
+            <RadioButton
+                android:id="@+id/radiobtnAlerteVV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Agression Verbale"
+                android:layout_below="@+id/radiobtnAlerteV"/>
+
+            <RadioButton
+                android:id="@+id/radiobtnAlerteVP"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Agression Physique"
+                android:layout_below="@+id/radiobtnAlerteVV"/>
+        </RadioGroup>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutAdresse"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layoutBtn"
+        android:gravity="start"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/txtAdresse"
+            android:layout_width="157dp"
+            android:layout_height="33dp"
+            android:text="Adresse"
+            android:layout_marginTop="40dp"/>
+
+        <EditText
+            android:id="@+id/edtAdresse"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:enabled="false"
+            android:minHeight="48dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="start"
+        android:padding="10dp"
+        android:layout_below="@+id/layoutAdresse">
+
+        <TextView
+            android:id="@+id/txtSeekBar"
+            android:layout_width="157dp"
+            android:layout_height="33dp"
+            android:text="Niveau de danger"
+
+            android:layout_marginTop="40dp"/>
+
+        <SeekBar
+            android:id="@+id/seekBarNivDanger"
+            android:layout_width="match_parent"
+            android:layout_height="40dp" />
+
+        <Button
+            android:id="@+id/btnCreerAlerte"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Créer l'alerte "
+            />
+    </LinearLayout>
+
+
+</RelativeLayout>
