@@ -1,18 +1,18 @@
 package fr.projet.besafe;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.richpath.RichPath;
 import com.richpath.RichPathView;
 
-import fr.projet.besafe.Services.ImportDataServices.Download;
-
 import java.io.File;
+
+import fr.projet.besafe.Services.ImportDataServices.Download;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private Button bouton_alerte_physique;
     private Button bouton_alerte_verbale;
     private Button bouton_carte;
+
 
     private static final String DATA_URL = "https://static.data.gouv.fr/resources/chiffres-departementaux-mensuels-relatifs-aux-crimes-et-delits-enregistres-par-les-services-de-police-et-de-gendarmerie-depuis-janvier-1996/20221031-102847/tableaux-4001-ts.xlsx";
 
@@ -97,7 +98,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(button_carte);
             }
         });
-
         //SendDataExcelBD s = SendDataExcelBD.setPath(this, "test");
         //s.setListAlertExel();
         //s.sendAlert();
