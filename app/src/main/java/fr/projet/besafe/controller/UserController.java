@@ -13,6 +13,7 @@ import java.util.concurrent.ExecutionException;
 import fr.projet.besafe.ConnexionActivity;
 import fr.projet.besafe.api.APIClient;
 import fr.projet.besafe.api.IBeSafeAPI;
+import fr.projet.besafe.global.UserAuth;
 import fr.projet.besafe.model.User.User;
 import fr.projet.besafe.modelApi.User.UserGson;
 import retrofit2.Call;
@@ -46,9 +47,11 @@ public class UserController {
                 UserGson userGson = response.body();
                 if(userGson != null){
                     boolean success = userGson.isSuccess();
-                    getView().resultConnexion(success);
-                    if(success)
+                    if(success){
                         setUser(userGson.toUser());
+                        UserAuth.getInstance().setToken(userGson.getToken());
+                    }
+                    getView().resultConnexion(success);
                 }
             }
 

@@ -29,14 +29,13 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
+import fr.projet.besafe.controller.AlerteBeSafe.AlerteBSController;
+
 public class FormCreationAlerte extends AppCompatActivity {
 
     private FusedLocationProviderClient fusedLocationProviderClient;
-
+    private AlerteBSController controller;
     private RadioGroup typesAlertes;
-    private static final int TYPE_ALERTE_AGRESSION_VOL = 0;
-    private static final int TYPE_ALERTE_AGRESSION_PHYSIQUE = 1;
-    private static final int TYPE_ALERTE_AGRESSION_VERBALE = 2;
 
     private List<Address> dataLocation = null;
     private EditText adresse;
@@ -53,6 +52,8 @@ public class FormCreationAlerte extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_form_creation_alerte);
+
+        this.controller = new AlerteBSController(this);
 
         typesAlertes = (RadioGroup) findViewById(R.id.radioGroupTypesAlertes);
 
@@ -76,7 +77,8 @@ public class FormCreationAlerte extends AppCompatActivity {
         creerAlerte.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                //faire des constantes
+                sendAlerte("alerteV");
             }
         });
     }
@@ -130,8 +132,9 @@ public class FormCreationAlerte extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
-    public SeekBar getNivDanger() {
-        return nivDanger;
+    public void sendAlerte(String typeAlerte){
+        this.controller.setTypeAlerte(typeAlerte);
+        this.controller.sendAlerteAsync();
     }
 
     public void resultConnexion(boolean success){
@@ -140,11 +143,15 @@ public class FormCreationAlerte extends AppCompatActivity {
             startActivity(accueil);
         }
         else {
-            Toast.makeText(FormCreationAlerte.this,"Connexion échoué, email ou mot de passe invalides",Toast.LENGTH_LONG).show();
+            Toast.makeText(FormCreationAlerte.this,"Envoie de l'alerte échoué",Toast.LENGTH_LONG).show();
         }
     }
 
     public ProgressDialog createDialogue(){
         return new ProgressDialog(this);
+    }
+
+    public SeekBar getNivDanger() {
+        return nivDanger;
     }
 }

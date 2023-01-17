@@ -57,37 +57,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-
-        Button button_alerte_vol = (Button) findViewById(R.id.button_alerte_vol);
-        Button button_alerte_physique = (Button) findViewById(R.id.button_alerte_physique);
-        Button button_alerte_verbale = (Button) findViewById(R.id.button_alerte_verbale);
+        Button button_alerte_vol = (Button) findViewById(R.id.button_alerte);
         Button button_carte = (Button) findViewById(R.id.button_carte);
 
         button_alerte_vol.setOnClickListener(new View.OnClickListener()
 
         {
             public void onClick (View v){
-                Intent button_alerte_vol= new Intent(MainActivity.this, AlerteVolActivity.class);
+                Intent button_alerte_vol= new Intent(MainActivity.this, FormCreationAlerte.class);
                 startActivity(button_alerte_vol);            }
-        });
-
-        button_alerte_physique.setOnClickListener(new View.OnClickListener()
-
-        {
-            public void onClick (View v){
-                Intent button_alerte_physique= new Intent(MainActivity.this, AlertePhysiqueActivity.class);
-                startActivity(button_alerte_physique);
-            }
-        });
-
-        button_alerte_verbale.setOnClickListener(new View.OnClickListener()
-
-        {
-            public void onClick (View v){
-                Intent button_alerte_verbale= new Intent(MainActivity.this, AlerteVerbaleActivity.class);
-                startActivity(button_alerte_verbale);
-            }
         });
 
         button_carte.setOnClickListener(new View.OnClickListener()

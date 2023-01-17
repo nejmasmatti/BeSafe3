@@ -11,8 +11,10 @@ import java.util.concurrent.ExecutionException;
 import fr.projet.besafe.FormCreationAlerte;
 import fr.projet.besafe.api.APIClient;
 import fr.projet.besafe.api.IBeSafeAPI;
+import fr.projet.besafe.global.UserAuth;
 import fr.projet.besafe.model.AlerteBeSafe.AlerteVol;
 import fr.projet.besafe.modelApi.AlertesBeSafe.AlerteVolGson;
+import fr.projet.besafe.modelApi.User.UserGson;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -37,6 +39,10 @@ public class AlerteBSController {
         return typeAlerte;
     }
 
+    public void setTypeAlerte(String typeAlerte) {
+        this.typeAlerte = typeAlerte;
+    }
+
     private void sendAlerte(String typeAlerte){
 
         Map<String, String> alerte = new HashMap<>();
@@ -49,8 +55,11 @@ public class AlerteBSController {
             sendAlerteV.enqueue(new Callback<AlerteVolGson>() {
                 @Override
                 public void onResponse(Call<AlerteVolGson> call, Response<AlerteVolGson> response) {
-                    System.out.println("réponse alerte vol");
-                    System.out.println(response.body());
+                    AlerteVolGson alerteVolGson = response.body();
+                    if(alerteVolGson != null){
+                        boolean success = alerteVolGson.isSuccess();
+                        getView().resultConnexion(success);
+                    }
                 }
 
                 @Override

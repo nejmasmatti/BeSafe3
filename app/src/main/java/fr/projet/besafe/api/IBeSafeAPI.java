@@ -6,6 +6,7 @@ import fr.projet.besafe.modelApi.AlertesBeSafe.AlerteVolGson;
 import fr.projet.besafe.modelApi.User.UserGson;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 
 public interface IBeSafeAPI {
@@ -15,7 +16,7 @@ public interface IBeSafeAPI {
             @Body Map<String, String> user
     );
 
-    @POST("/api/aleretev/create")
+    @POST("/api/alertv/create")
     Call<AlerteVolGson> sendAlerteV(
             @Body Map<String, String> alertes
     );
