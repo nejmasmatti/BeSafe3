@@ -112,7 +112,7 @@ public class MyMapActivity extends AppCompatActivity {
 
                                         GetAddress(selectedLat,selectedLng);
 
-                                        Intent intent = new Intent(MyMapActivity.this, AlerteVolActivity.class);
+                                        Intent intent = new Intent(MyMapActivity.this, DetailAlerteBeSafeActivity.class);
                                         intent.putExtra("keyLat", selectedLat);
                                         intent.putExtra("keyLng", selectedLng);
                                         intent.putExtra("keyCity", addresses.get(0).getLocality());

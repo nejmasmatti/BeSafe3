@@ -10,6 +10,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import org.json.JSONException;
+
 import fr.projet.besafe.controller.UserController;
 
 public class ConnexionActivity extends AppCompatActivity {
@@ -41,7 +43,11 @@ public class ConnexionActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 //                makeConnexion();
-                connexion();
+                try {
+                    connexion();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
@@ -54,27 +60,13 @@ public class ConnexionActivity extends AppCompatActivity {
         return password;
     }
 
-    public boolean isSuccess() {
-        return success;
-    }
 
-    public void setSuccess(boolean success) {
-        this.success = success;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
-
-    private void connexion(){
-        this.userController.makeConnexion();
+    private void connexion() throws JSONException {
+        this.userController.login();
     }
 
     public void resultConnexion(boolean success){
+        userController.onPostExecute();
         if(success){
             Intent accueil = new Intent(ConnexionActivity.this, MainActivity.class);
             startActivity(accueil);

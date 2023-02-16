@@ -1,10 +1,10 @@
 package fr.projet.besafe.modelApi;
 
-public abstract class AReponseApi {
+public class ReponseApi {
     private boolean success = false;
     private String message;
 
-    public AReponseApi(boolean success, String message){
+    public ReponseApi(boolean success, String message){
         this.success = success;
         this.message = message;
     }
