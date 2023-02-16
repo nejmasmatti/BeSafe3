@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import fr.projet.besafe.BuildConfig;
 import fr.projet.besafe.global.UserAuth;
+import fr.projet.besafe.model.User.User;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -17,7 +18,6 @@ public class APIClient {
     private static final String API = BuildConfig.API_URL_BESAFE_API + "/";
 
     private APIClient(){
-
     }
 
     private static OkHttpClient buildClient(){
@@ -26,7 +26,8 @@ public class APIClient {
                     @Override
                     public Response intercept(Chain chain) throws IOException {
                         Request request = chain.request();
-                        String token = UserAuth.getInstance().getToken();
+                        User user = UserAuth.getInstance().getUser();
+                        String token = user != null ? user.getToken() : null;
                         Request.Builder builder = request.newBuilder()
                                 .addHeader("Authorization", token !=null ? "Bearer " + token : "" );
 

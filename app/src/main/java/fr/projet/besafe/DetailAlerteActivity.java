@@ -18,13 +18,13 @@ import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
 
 import fr.projet.besafe.model.AlertExcel.AlertExcel;
-import fr.projet.besafe.model.AlerteBeSafe.AlerteVol;
+import fr.projet.besafe.model.AlerteBeSafe.Alerte;
 
 public class DetailAlerteActivity extends AppCompatActivity {
 
     ListView listView1, listView2;
     ArrayList<AlertExcel> listAlertExcel = new ArrayList<>();
-    ArrayList<AlerteVol> listAlertBeSafe = new ArrayList<>();
+    ArrayList<Alerte> listAlertBeSafe = new ArrayList<>();
 
     private ProgressDialog dialog;
     private JSONParser parser = new JSONParser();
@@ -186,7 +186,7 @@ public class DetailAlerteActivity extends AppCompatActivity {
 
                         JSONObject alertBeSafe=alertsBeSafe.getJSONObject(i);
 
-                        AlerteVol a =new AlerteVol();
+                        Alerte a =new Alerte();
                         listAlertBeSafe.add(a);
                     }
                 }

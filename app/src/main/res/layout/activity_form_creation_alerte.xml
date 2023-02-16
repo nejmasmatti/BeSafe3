@@ -30,20 +30,20 @@
                 android:id="@+id/radiobtnAlerteV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Vol"/>
+                android:text="VOL"/>
 
             <RadioButton
                 android:id="@+id/radiobtnAlerteVV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Agression Verbale"
+                android:text="VERBALE"
                 android:layout_below="@+id/radiobtnAlerteV"/>
 
             <RadioButton
                 android:id="@+id/radiobtnAlerteVP"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Agression Physique"
+                android:text="PHYSIQUE"
                 android:layout_below="@+id/radiobtnAlerteVV"/>
         </RadioGroup>
 
@@ -70,7 +70,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
-            android:enabled="false"
+            android:enabled="true"
             android:minHeight="48dp" />
     </LinearLayout>
 

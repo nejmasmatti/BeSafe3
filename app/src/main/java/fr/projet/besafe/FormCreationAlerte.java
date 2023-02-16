@@ -26,25 +26,30 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
-import fr.projet.besafe.controller.AlerteBeSafe.AlerteBSController;
+import fr.projet.besafe.controller.AlerteBeSafe.EnvoieAlerteBSController;
+import fr.projet.besafe.global.UserAuth;
+import fr.projet.besafe.model.Adresse;
 
 public class FormCreationAlerte extends AppCompatActivity {
 
     private FusedLocationProviderClient fusedLocationProviderClient;
-    private AlerteBSController controller;
+    private EnvoieAlerteBSController controller;
     private RadioGroup typesAlertes;
+    private RadioButton typeAlerteSelected;
+    private SeekBar nivDanger;
 
     private List<Address> dataLocation = null;
-    private EditText adresse;
+    private EditText adresseEditText;
 
-    private SeekBar nivDanger;
     private Button creerAlerte;
 
-
-    private String adresseAlerte, latitudeAlerte, longitudeAlerte, villeAlerte, nivDangerAlerte;
+    Map<String, Object> alerte;
+    private Adresse adresseAlerte;
 
     private final static int REQUEST_CODE = 100;
 
@@ -53,11 +58,11 @@ public class FormCreationAlerte extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_form_creation_alerte);
 
-        this.controller = new AlerteBSController(this);
+        this.controller = new EnvoieAlerteBSController(this);
 
         typesAlertes = (RadioGroup) findViewById(R.id.radioGroupTypesAlertes);
 
-        adresse = (EditText) findViewById(R.id.edtAdresse);
+        adresseEditText = (EditText) findViewById(R.id.edtAdresse);
 
         nivDanger = (SeekBar) findViewById(R.id.seekBarNivDanger);
 
@@ -66,21 +71,47 @@ public class FormCreationAlerte extends AppCompatActivity {
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         getLastLocation();
 
+        alerte = new HashMap<>();
+        alerte.put("id_user", UserAuth.getInstance().getUser().getId());
+
         typesAlertes.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                RadioButton typeAlerte = findViewById(i);
-                System.out.println(typeAlerte.getText());
+                typeAlerteSelected = findViewById(i);
             }
+        });
+
+        nivDanger.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                alerte.put("niveau_danger", i);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {}
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {}
         });
 
         creerAlerte.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //faire des constantes
-                sendAlerte("alerteV");
+                if(isTypeAlerteAndAdressSelected()){
+                    alerte.put("type_alerte", String.valueOf(typeAlerteSelected.getText()));
+                    alerte.put("adresse", adresseAlerte);
+                    alerte.put("libelle", "Agression " + String.valueOf(typeAlerteSelected.getText()).toLowerCase(Locale.ROOT) + " à " + adresseAlerte.getVille());
+                    controller.sendAlerte();
+                }
+                else {
+                    Toast.makeText(FormCreationAlerte.this, "Veuillez bien pensez à cliquer sur le type de l'alerte et saisir l'adresse", Toast.LENGTH_SHORT).show();
+                }
             }
         });
+    }
+
+    private boolean isTypeAlerteAndAdressSelected(){
+        return this.typeAlerteSelected != null && this.adresseAlerte != null;
     }
 
     private void getLastLocation() {
@@ -95,12 +126,10 @@ public class FormCreationAlerte extends AppCompatActivity {
                                 Geocoder geocoder = new Geocoder(FormCreationAlerte.this, Locale.getDefault());
                                 try {
                                     dataLocation = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-
-                                    latitudeAlerte = String.valueOf(dataLocation.get(0).getLatitude());
-                                    longitudeAlerte = String.valueOf(dataLocation.get(0).getLongitude());
-                                    adresseAlerte = String.valueOf(dataLocation.get(0).getAddressLine(0));
-                                    adresse.setText(dataLocation.get(0).getAddressLine(0));
-                                    villeAlerte = String.valueOf(dataLocation.get(0).getLocality());
+                                    adresseEditText.setText(dataLocation.get(0).getAddressLine(0));
+                                    adresseAlerte = new Adresse();
+                                    adresseAlerte.setLibelle(String.valueOf(dataLocation.get(0).getAddressLine(0)));
+                                    adresseAlerte.setVille(String.valueOf(dataLocation.get(0).getLocality()));
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }
@@ -114,7 +143,7 @@ public class FormCreationAlerte extends AppCompatActivity {
 
         }
     }
-    // faire une classe pour récupérer la position et demander la permission S SOLID
+
     private void askPermission(){
         ActivityCompat.requestPermissions(FormCreationAlerte.this, new String []
                 {Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE);
@@ -132,12 +161,8 @@ public class FormCreationAlerte extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
-    public void sendAlerte(String typeAlerte){
-        this.controller.setTypeAlerte(typeAlerte);
-        this.controller.sendAlerteAsync();
-    }
-
     public void resultConnexion(boolean success){
+        this.controller.onPostExecute();
         if(success){
             Intent accueil = new Intent(FormCreationAlerte.this, MainActivity.class);
             startActivity(accueil);
@@ -151,7 +176,7 @@ public class FormCreationAlerte extends AppCompatActivity {
         return new ProgressDialog(this);
     }
 
-    public SeekBar getNivDanger() {
-        return nivDanger;
+    public Map<String, Object> getAlerte() {
+        return alerte;
     }
 }

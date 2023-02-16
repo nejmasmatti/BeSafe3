@@ -1,9 +1,9 @@
 package fr.projet.besafe.modelApi.User;
 
 import fr.projet.besafe.model.User.User;
-import fr.projet.besafe.modelApi.AReponseApi;
+import fr.projet.besafe.modelApi.ReponseApi;
 
-public class UserGson extends AReponseApi {
+public class UserGson extends ReponseApi {
 
     private String token;
     private int id;

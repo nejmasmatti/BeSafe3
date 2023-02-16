@@ -1,9 +1,11 @@
 package fr.projet.besafe.global;
 
+import fr.projet.besafe.model.User.User;
+
 public class UserAuth {
     private static UserAuth INSTANCE = null;
 
-    private String token;
+    private User user;
 
     private UserAuth(){
 
@@ -17,11 +19,11 @@ public class UserAuth {
         return INSTANCE;
     }
 
-    public String getToken() {
-        return token;
+    public User getUser() {
+        return user;
     }
 
-    public void setToken(String token) {
-        this.token = token;
+    public void setUser(User user) {
+        this.user = user;
     }
 }

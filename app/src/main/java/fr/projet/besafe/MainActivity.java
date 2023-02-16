@@ -1,7 +1,9 @@
 package fr.projet.besafe;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 
@@ -23,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private Button bouton_alerte_verbale;
     private Button bouton_carte;
 
+    private static Color COLOR = new Color();
 
     private static final String DATA_URL = "https://static.data.gouv.fr/resources/chiffres-departementaux-mensuels-relatifs-aux-crimes-et-delits-enregistres-par-les-services-de-police-et-de-gendarmerie-depuis-janvier-1996/20221031-102847/tableaux-4001-ts.xlsx";
 
