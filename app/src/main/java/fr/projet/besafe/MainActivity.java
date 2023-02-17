@@ -1,9 +1,7 @@
 package fr.projet.besafe;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 
@@ -12,35 +10,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.richpath.RichPath;
 import com.richpath.RichPathView;
 
-import java.io.File;
-
-import fr.projet.besafe.Services.ImportDataServices.Download;
-
 public class MainActivity extends AppCompatActivity {
 
     private RichPathView map;
 
-    private Button bouton_alerte_vol;
-    private Button bouton_alerte_physique;
-    private Button bouton_alerte_verbale;
-    private Button bouton_carte;
-
-    private static Color COLOR = new Color();
-
-    private static final String DATA_URL = "https://static.data.gouv.fr/resources/chiffres-departementaux-mensuels-relatifs-aux-crimes-et-delits-enregistres-par-les-services-de-police-et-de-gendarmerie-depuis-janvier-1996/20221031-102847/tableaux-4001-ts.xlsx";
 
     @Override
     protected void onStart() {
         super.onStart();
-        //downloadData();
-    }
-
-    public void downloadData(){
-        File path = getApplicationContext().getCacheDir();
-        String link = DATA_URL;
-        System.out.println(path.getAbsolutePath());
-        File out = new File(path, "/BeSafe.xlsx");
-        new Thread(new Download(link, out)).start();
     }
 
 
@@ -60,30 +37,33 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Button button_alerte_vol = (Button) findViewById(R.id.button_alerte);
-        Button button_carte = (Button) findViewById(R.id.button_carte);
+        Button boutonAlerte = (Button) findViewById(R.id.button_alerte);
+        Button boutonCarte = (Button) findViewById(R.id.button_carte);
+        Button boutonMesAlertes = (Button) findViewById(R.id.button_mesAlertes);
 
-        button_alerte_vol.setOnClickListener(new View.OnClickListener()
-
+        boutonAlerte.setOnClickListener(new View.OnClickListener()
         {
             public void onClick (View v){
-                Intent button_alerte_vol= new Intent(MainActivity.this, FormCreationAlerte.class);
-                startActivity(button_alerte_vol);            }
-        });
-
-        button_carte.setOnClickListener(new View.OnClickListener()
-
-        {
-            public void onClick (View v){
-                Intent button_carte= new Intent(MainActivity.this, MyMapActivity.class);
-                startActivity(button_carte);
+                Intent a = new Intent(MainActivity.this, FormCreationAlerte.class);
+                startActivity(a);
             }
         });
-        //SendDataExcelBD s = SendDataExcelBD.setPath(this, "test");
-        //s.setListAlertExel();
-        //s.sendAlert();
 
+        boutonCarte.setOnClickListener(new View.OnClickListener()
+        {
+            public void onClick (View v){
+                Intent a = new Intent(MainActivity.this, MyMapActivity.class);
+                startActivity(a);
+            }
+        });
 
+        boutonMesAlertes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent a = new Intent(MainActivity.this, MesAlertesActivity.class);
+                startActivity(a);
+            }
+        });
     }
 
 

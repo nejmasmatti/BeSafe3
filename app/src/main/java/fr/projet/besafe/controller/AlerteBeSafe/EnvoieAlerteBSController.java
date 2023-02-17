@@ -3,6 +3,8 @@ package fr.projet.besafe.controller.AlerteBeSafe;
 import android.app.ProgressDialog;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import com.google.gson.JsonObject;
 
 import java.util.Map;
@@ -51,18 +53,17 @@ public class EnvoieAlerteBSController {
         onPreExecute();
         sendAlerte.enqueue(new Callback<ReponseApi>() {
             @Override
-            public void onResponse(Call<ReponseApi> call, Response<ReponseApi> response) {
+            public void onResponse(@NonNull Call<ReponseApi> call, @NonNull Response<ReponseApi> response) {
                 ReponseApi reponseApi = response.body();
                 if(reponseApi != null){
                     boolean success = reponseApi.isSuccess();
-                    view.resultConnexion(success);
+                    view.resultSendAlerte(success);
                 }
             }
 
             @Override
-            public void onFailure(Call<ReponseApi> call, Throwable t) {
+            public void onFailure(@NonNull Call<ReponseApi> call, @NonNull Throwable t) {
                 Log.d("api", "Api call failed");
-                System.out.println(t.getMessage());
             }
         });
     }

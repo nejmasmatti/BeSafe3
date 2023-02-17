@@ -1,13 +1,11 @@
 package fr.projet.besafe.model.AlerteBeSafe;
 
 import fr.projet.besafe.model.Adresse;
-import fr.projet.besafe.model.Position;
-import fr.projet.besafe.model.User.User;
 
 public class Alerte{
 
     private int id;
-    private User user;
+    private int idUser;
     private String typeAlerte;
     private String libelle;
     private Adresse adresse;
@@ -17,9 +15,9 @@ public class Alerte{
 
     }
 
-    public Alerte(int id, User user, String typeAlerte, String libelle, Adresse adresse, int nivDanger) {
+    public Alerte(int id, int idUser, String typeAlerte, String libelle, Adresse adresse, int nivDanger) {
         this.id = id;
-        this.user = user;
+        this.idUser = idUser;
         this.typeAlerte = typeAlerte;
         this.libelle = libelle;
         this.adresse = adresse;
@@ -34,12 +32,12 @@ public class Alerte{
         this.id = idAlerte;
     }
 
-    public User getUser() {
-        return user;
+    public int getUser() {
+        return idUser;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUser(int idUser) {
+        this.idUser = idUser;
     }
 
     public String getTypeAlerte() {
