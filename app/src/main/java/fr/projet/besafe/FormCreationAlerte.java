@@ -161,7 +161,7 @@ public class FormCreationAlerte extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
-    public void resultConnexion(boolean success){
+    public void resultSendAlerte(boolean success){
         this.controller.onPostExecute();
         if(success){
             Intent accueil = new Intent(FormCreationAlerte.this, MainActivity.class);

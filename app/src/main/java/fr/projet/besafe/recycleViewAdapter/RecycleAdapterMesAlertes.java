@@ -46,18 +46,19 @@ public class RecycleAdapterMesAlertes extends RecyclerView.Adapter<RecycleAdapte
 
     @Override
     public void onBindViewHolder(@NonNull RecycleAdapterMesAlertes.MyViewHolder holder, int position) {
-        int idAlerte = ((Alerte) listAlertes.get(position)).getIdAlerte();
-        int nivDanger = ((Alerte) listAlertes.get(position)).getNivDanger();
-        String titre = "Alerte pour un vol n° " + ((Alerte) listAlertes.get(position)).getIdAlerte();
+        int idAlerte = listAlertes.get(position).getIdAlerte();
+        int nivDanger = listAlertes.get(position).getNivDanger();
+        String titre = listAlertes.get(position).getLibelle();
+        String adresse = listAlertes.get(position).getAdresse().getLibelle();
         String photo = "@drawable/";
         if(nivDanger > 0 && nivDanger < 35){
-            photo += "icons8_faible_risque_80.png";
+            photo += "icons8_faible_risque_80";
         }
         else if(nivDanger >= 35 && nivDanger < 70){
-            photo += "icons8_risque_moyen_80.png";
+            photo += "icons8_risque_moyen_80";
         }
         else if(nivDanger >= 70 && nivDanger <=100){
-            photo += "icons8_risque_eleve_80.png";
+            photo += "icons8_risque_eleve_80";
         }
 
 
@@ -78,6 +79,8 @@ public class RecycleAdapterMesAlertes extends RecyclerView.Adapter<RecycleAdapte
 
         listIdAnnonceCheck.put(idAlerte, false);
         holder.txtTitre.setText(titre);
+        holder.txtNivDanger.setText(String.valueOf(nivDanger));
+        holder.txtAdresse.setText(adresse);
     }
 
 
@@ -87,15 +90,16 @@ public class RecycleAdapterMesAlertes extends RecyclerView.Adapter<RecycleAdapte
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        private TextView txtTitre, txtAdresse;
+        private TextView txtTitre, txtAdresse, txtNivDanger;
         private ImageView img;
         private OnAlerteListenner onAlerteListenner;
         private CheckBox checkBox;
 
         public MyViewHolder(final View view, OnAlerteListenner onAnnonceListenner){
             super(view);
-            txtTitre = view.findViewById(R.id.txtTitreAlerte);
-            txtAdresse = view.findViewById(R.id.txtAdresse);
+            txtTitre = view.findViewById(R.id.titreAlerte);
+            txtAdresse = view.findViewById(R.id.adresse);
+            txtNivDanger = view.findViewById(R.id.nivDanger);
             checkBox = view.findViewById(R.id.checkBoxDelete);
             img = view.findViewById(R.id.imageView);
             img.setClipToOutline(true);

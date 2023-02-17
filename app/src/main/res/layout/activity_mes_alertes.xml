@@ -13,7 +13,7 @@
         android:id="@+id/fragmentMesAlertes"
         android:name="fr.projet.besafe.FragmentMesAlertes"
         android:layout_width="401dp"
-        android:layout_height="644dp"
+        android:layout_height="482dp"
         tools:layout="@layout/fragment_mes_alertes"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp" />
@@ -22,6 +22,6 @@
         android:id="@+id/btnDeleteMesAlertes"
         android:layout_width="266dp"
         android:layout_height="58dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="40dp"
         android:text="Delete" />
 </LinearLayout>
