@@ -195,4 +195,7 @@ public class MyMapActivity extends AppCompatActivity {
         }
 
     }
+
+    public void showMapAtLocation(LatLng customLocation) {
+    }
 }
