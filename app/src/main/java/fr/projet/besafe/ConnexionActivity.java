@@ -21,13 +21,6 @@ public class ConnexionActivity extends AppCompatActivity {
     private EditText email;
     private EditText password;
 
-    //private RequestQueue queue;
-
-    private String token;
-
-    private ProgressDialog dialog;
-    private boolean success;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,9 +28,9 @@ public class ConnexionActivity extends AppCompatActivity {
 
         this.userController = new UserController(this);
 
-        email = (EditText) findViewById(R.id.edtlogin);
-        password = (EditText) findViewById(R.id.edtpass);
-        Button connexion = (Button) findViewById(R.id.btnconn);
+        email =  findViewById(R.id.edtlogin);
+        password =  findViewById(R.id.edtpass);
+        Button connexion = findViewById(R.id.btnconn);
 
         connexion.setOnClickListener(new View.OnClickListener() {
             @Override

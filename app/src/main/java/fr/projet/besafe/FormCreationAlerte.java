@@ -46,8 +46,6 @@ public class FormCreationAlerte extends AppCompatActivity {
     private List<Address> dataLocation = null;
     private EditText adresseEditText;
 
-    private Button creerAlerte;
-
     Map<String, Object> alerte;
     private Adresse adresseAlerte;
 
@@ -66,7 +64,7 @@ public class FormCreationAlerte extends AppCompatActivity {
 
         nivDanger = (SeekBar) findViewById(R.id.seekBarNivDanger);
 
-        creerAlerte = (Button) findViewById(R.id.btnCreerAlerte);
+        Button creerAlerte = (Button) findViewById(R.id.btnCreerAlerte);
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         getLastLocation();
@@ -164,7 +162,7 @@ public class FormCreationAlerte extends AppCompatActivity {
     public void resultSendAlerte(boolean success){
         this.controller.onPostExecute();
         if(success){
-            Intent accueil = new Intent(FormCreationAlerte.this, MainActivity.class);
+            Intent accueil = new Intent(FormCreationAlerte.this, MesAlertesActivity.class);
             startActivity(accueil);
         }
         else {

@@ -1,123 +1,293 @@
 @startuml
 'https://plantuml.com/class-diagram
 
+package fr.projet.exemple {
+package api {
+    class APIClient{
+        + buildClient() : OkHttpClient
+        + getInstance() : Retrofit
+    }
 
+    interface IBeSafeAPI {
+        + signUser(String email, String password) : Call<UserGson>
+        + sendAlerte(JsonObject alerte) : Call<ReponseApi>
+        + getAlerteUser(int idUser) : Call<AlerteParUserGson>
+        + deleteAlerte(JsonObject alerte) : Call<ReponseApi>
+    }
 
-IAlerte <|-- AlerteViolencePhysiqueActivity
-IAlerte <|-- AlerteViolenceVerbaleActivity
-IAlerte <|-- AlerteVolActivity
-User <-- IAlerte
-Position <-- IAlerte
-
-
-Arrondissement "0..*" <-- "1" MainActivity
-JSONParser "1" <-- "1" MainActivity
-AlerteVolActivity "1" <-- "1" MainActivity
-AlerteViolenceVerbaleActivity "1" <-- "1" MainActivity
-AlerteViolencePhysiqueActivity "1" <-- "1" MainActivity
-
-Adresse "1" <-- "1" Position
-IUser <|-- User
-
-
-
-interface IAlerte {
-    + String getDescription()
-    + int getDanger()
 }
 
-interface IUser {
+package controller {
+    package AlerteBeSafe{
+        class DeleteAlerteBSController {
+            - MesAlertesActivity view
+            - IBeSafeAPI iBeSafeAPI
+            - ProcessDialog dialog
+            + this()
+            + deleteAlertes(List<Integer> idsAlertes)
+            + onPostExecute()
+            - onPreExecute()
+        }
+        class EnvoieAlerteBSController {
+            - FormCreationAlerte view
+            - IBeSafeAPI iBeSafeAPI
+            - ProcessDialog dialog
+            + this()
+            + sendAlerte()
+            + onPostExecute()
+            - onPreExecute()
+        }
+        class RecupererAlerteBSUserController {
+            - MesAlertesActivity view
+            - IBeSafeAPI iBeSafeAPI
+            - ProcessDialog dialog
+            + this()
+            + getAlerteUser()
+            + onPostExecute()
+            - onPreExecute()
+        }
+        class RecupererAlerteBSDepartementController {
+            - DetailAlerteActivity view
+            - IBeSafeAPI iBeSafeAPI
+            - ProcessDialog dialog
+            + this()
+            + getAlerteParDepartement()
+            + onPostExecute()
+            - onPreExecute()
+        }
+    }
+
+    class UserController {
+        - ConnexionActivity listView
+        - IBeSafeAPI iBeSafeAPI
+        - ProcessDialog dialog
+        + this()
+        + sendAlerte()
+        + onPostExecute()
+        - onPreExecute()
+    }
+    class RecupererAlerteGouvDepartementController {
+        - DetailAlerteActivity view
+        - IBeSafeAPI iBeSafeAPI
+        - ProcessDialog dialog
+        + this()
+        + getAlerteGouvParDepartement()
+        + onPostExecute()
+        - onPreExecute()
+    }
 }
 
-
-
-
-class User {
-    - prenom : String
-    - nom : String
-    - id : int
-    - tabAlerte : ArrayList<IAlerte>
-    + this()
+package global {
+    class UserAuth{
+        - INSTANCE : UserAuth
+        - user : User
+        + getInstance() : UserAuth
+        + getUser() : User
+        + setUser(User user)
+    }
 }
 
+package model {
+    package model.AlerteBeSafe{
+        class Alerte {
+            - id : int
+            - idUser : int
+            - typeAlerte: String
+            - libelle : String
+            - adresse : Adresse
+            - nivDanger : int
+            + this()
+        }
+    }
+    package AlerteGouvernementale{
+        class AlerteGouvernementale {
+            - id : int
+            - libelle : String
+            - typeAlerte : String
+            + this()
+        }
+    }
+    package model.User{
+        class User {
+            - token : String
+            - id : int
+            - name : String
+            - email : String
+            + this()
+        }
+    }
 
-class AlerteVolActivity {
-    + this()
-    + askPermission() : void
-    + getLastLocation() : void
-    + onCreate(Bundle) : void
-    + onRequestPermissions() : void
+    class Adresse {
+        - id : int
+        - libelle : String
+        - ville : String
+        + this()
+    }
 }
 
-class AlerteViolencePhysiqueActivity {
-    + this()
-    + askPermission() : void
-    + getLastLocation() : void
-    + onCreate(Bundle) : void
-    + onRequestPermissions() : void
+package modelAPI {
+    package modelAPI.AlerteBeSafe{
+        class AlerteParUserGson {
+            - ArrayList<Alerte> alertes
+            + this()
+        }
+        class AlerteParDepartementGson {
+            - codeDepartement : String
+            - ArrayList<Alerte> alertes
+            + this()
+        }
+    }
+    package modelAPI.User{
+        class UserGson {
+            - token : String
+            - id : int
+            - name : String
+            - email : String
+            + this()
+            + toUser() : User
+        }
+    }
+
+    class AlerteGouvParDepartementGson {
+        - codeDepartement : String
+        - ArrayList<Alerte> alertes
+        + this()
+    }
+
+    class ReponseApi {
+        - success : boolean
+        - message : String
+    }
 }
 
-class AlerteViolenceVerbaleActivity {
-    + this()
-    + askPermission() : void
-    + getLastLocation() : void
-    + onCreate(Bundle) : void
-    + onRequestPermissions() : void
+AlerteParUserGson --|> ReponseApi
+AlerteParDepartementGson --|> ReponseApi
+AlerteGouvParDepartementGson --|> ReponseApi
+UserGson --|> ReponseApi
+
+package recycleViewAdaptater {
+    class RecycleAdaptaterMesAlertes {
+        - listAlertes : ArrayList<Alerte>
+        - ressource : int
+        - context : Contex
+        - inflater : LayoutInflater
+        - onAlerteListenner : onAlerteListenner
+        - listIdAnnonceCheck : HashMap<Integer, Boolean>
+        + this()
+    }
 }
 
-
-class Arrondissement {
-    - nom : String
-    - arrondissement : int
-    - degreIncident : int
-    + this()
+class ConnexionActivity {
+    - userController : UserController
+    - email : EditText
+    - password : EditText
+    ~ onCreate(Bundle savedInstanceState)
+    - connexion()
+    - resultConnexion(boolean success)
+    - createDialog() : ProcessDialog
 }
 
 class MainActivity {
-    - listView : ListView<View>
-    - listArrondissement : ListView<Arrondissement>
-    - dialog : ProgressDialog
-    - cle : int
-    + selectAlerte() : void
-    + createDialog() : ProgressDialog
-    + resultConnexion(int) : void
+    - map : RichPathView
+    ~ onCreate(Bundle savedInstanceState)
+    ~ onStart()
 }
 
+class DetailAlerteActivity {
 
-class Position {
-    - longitude : float
-    - latitude : float
-    - altitude : float
-    - adresse : Adresse
-    + this()
 }
 
-class Adresse {
-    - ville : String
-    - rue : String
-    - numero : String
-    + this()
+class FormCreationAlerte {
+    - fusedLocationProviderClient : FusedLocationProviderClient
+    - controller : EnvoieAlerteBSController
+    - typesAlertes : RadioGroup
+    - typeAlerteSelected : RadioButton
+    - nivDanger : SeekBar
+    - dataLocation : List<Adress>
+    - adresseEditText : EditText
+    - alerte : Map<String, Object>
+    - adresseAlerte : Adresse
+    ~ onCreate(Bundle savedInstanceState) : void
+    + askPermission() : void
+    + getLastLocation() : void
+    + onRequestPermissions() : void
 }
 
-class JSONParser {
-    - conn : HttpURLConnection
-    - wr : DataOutputStream
-    - result : StringBuilder
-    - urlObj : URL
-    - jObj : JSONObject
-    - paramString : String
-    + makeHttpRequest(String, String, HashMap<String, String>) : JSONObject
-()
+class MesAlertesActivity {
+    - listAlertes : ArrayList<Alerte>
+    - idsAlertesDelete : List<Integer>
+    - adaptater : RecycleAdapterMesAlertes
+    - deleteAlerteBSController : DeleteAlerteBSController
+    - recupererAlerteBSUserController : RecupererAlerteBSUserController
+    ~ onCreate(Bundle savedInstanceState)
+    ~ onStart()
+    + setAdapter()
+    + onAlerteClick(int position)
+    + resultGetAlerte(boolean success)
+    + resultDeleteAlerte(boolean success)
+    + createDialogue() : ProcessDialog
 }
 
-/'
-class Admin {
-    - id : int
-    - nom : String
-    - prenom : String
-    + this()
+class MyMapActivity {
+    - client : FusedLocationProviderClient
+    - selectedLat, selectedLng : double
+    - adresses : List<Adress>
+    ~ onCreate(Bundle savedInstanceState)
 }
-'/
+
+ConnexionActivity --> MainActivity
+
+MyMapActivity  <-- MainActivity
+DetailAlerteActivity  <-- MainActivity
+FormCreationAlerte <--  MainActivity
+MesAlertesActivity <--  MainActivity
+
+MesAlertesActivity <-- FormCreationAlerte
+
+UserAuth <-- APIClient
+IBeSafeAPI <-- DeleteAlerteBSController
+IBeSafeAPI <-- EnvoieAlerteBSController
+IBeSafeAPI <-- RecupererAlerteBSUserController
+
+EnvoieAlerteBSController <--> FormCreationAlerte
+EnvoieAlerteBSController --> ReponseApi
+EnvoieAlerteBSController --> UserAuth
+
+DeleteAlerteBSController <--> MesAlertesActivity
+DeleteAlerteBSController --> ReponseApi
+DeleteAlerteBSController --> UserAuth
+
+RecupererAlerteBSUserController <--> MesAlertesActivity
+RecupererAlerteBSUserController --> AlerteParUserGson
+RecupererAlerteBSUserController --> UserAuth
+
+RecupererAlerteBSDepartementController <--> DetailAlerteActivity
+RecupererAlerteBSDepartementController --> AlerteParDepartementGson
+RecupererAlerteBSDepartementController --> UserAuth
+
+UserController <--> ConnexionActivity
+UserController --> UserGson
+UserController --> UserAuth
+
+RecupererAlerteGouvDepartementController <--> DetailAlerteActivity
+RecupererAlerteGouvDepartementController --> AlerteGouvParDepartementGson
+RecupererAlerteGouvDepartementController --> UserAuth
+
+Alerte <-- MesAlertesActivity
+Alerte <-- DetailAlerteActivity
+Alerte <-- AlerteParUserGson
+
+AlerteGouvernementale <-- DetailAlerteActivity
+
+User <-- UserAuth
+User <-- UserGson
+
+Adresse <-- Alerte
+Adresse <-- FormCreationAlerte
+
+RecycleAdaptaterMesAlertes <-- MesAlertesActivity
+
+
 
 
 @enduml

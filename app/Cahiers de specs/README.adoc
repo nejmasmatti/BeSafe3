@@ -130,3 +130,6 @@ image::DiagrammeBeSafe.png[width=600]
 * description API back (ex REST)
 * diagrammes de séquence des interactions front/back (par feature, voir le back
 comme une boîte noire)
+
+.digramme back
+image::DiagrammeBACK.png[width=600]

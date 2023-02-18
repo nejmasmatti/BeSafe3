@@ -36,14 +36,11 @@ public class MyMapActivity extends AppCompatActivity {
 
     private FusedLocationProviderClient client;
     private SupportMapFragment mapFragment;
-    private int REQUEST_CODE = 111;
-    private ConnectivityManager manager;
+    private final int REQUEST_CODE = 111;
     private NetworkInfo networkInfo;
     private GoogleMap mMap;
-    private Geocoder geocoder;
     private double selectedLat, selectedLng;
     private List<Address> addresses;
-    private String selectedAddress;
 
 
     @Override
@@ -153,12 +150,12 @@ public class MyMapActivity extends AppCompatActivity {
     }
 
     private void CheckConnection(){
-        manager = (ConnectivityManager) getApplicationContext().getSystemService(CONNECTIVITY_SERVICE);
+        ConnectivityManager manager = (ConnectivityManager) getApplicationContext().getSystemService(CONNECTIVITY_SERVICE);
         networkInfo = manager.getActiveNetworkInfo();
     }
 
     private void GetAddress(double mLat, double mLng){
-        geocoder = new Geocoder(MyMapActivity.this, Locale.getDefault());
+        Geocoder geocoder = new Geocoder(MyMapActivity.this, Locale.getDefault());
 
         if (mLat != 0){
             try {
@@ -177,14 +174,12 @@ public class MyMapActivity extends AppCompatActivity {
                 String knownName = addresses.get(0).getFeatureName();
                 String dis = addresses.get(0).getSubAdminArea();
 
-                selectedAddress = mAddress;
-
                 if (mAddress != null){
                     MarkerOptions markerOptions = new MarkerOptions();
 
                     LatLng latLng = new LatLng(mLat, mLng);
 
-                    markerOptions.position(latLng).title(selectedAddress);
+                    markerOptions.position(latLng).title(mAddress);
 
                     mMap.addMarker(markerOptions).showInfoWindow();
 
