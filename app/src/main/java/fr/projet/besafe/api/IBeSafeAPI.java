@@ -4,6 +4,8 @@ import com.google.gson.JsonObject;
 
 import java.util.List;
 
+import fr.projet.besafe.modelApi.AlerteGouvParDepartementGson;
+import fr.projet.besafe.modelApi.AlertesBeSafe.AlerteParDepartementGson;
 import fr.projet.besafe.modelApi.AlertesBeSafe.AlerteParUserGson;
 import fr.projet.besafe.modelApi.ReponseApi;
 import fr.projet.besafe.modelApi.User.UserGson;
@@ -30,6 +32,16 @@ public interface IBeSafeAPI {
     @GET("/api/alertes/user")
     Call<AlerteParUserGson> getAlerteUser(
             @Query("id_user") int idUser
+    );
+
+    @GET("/api/alertes/departement")
+    Call<AlerteParDepartementGson> getAlerteParDepartement(
+            @Query("code") String code
+    );
+
+    @GET("/api/alertes-gouvernementale/departement")
+    Call<AlerteGouvParDepartementGson> getAlerteGouvParDepartement(
+            @Query("code") String code
     );
 
     @POST("/api/alertes/delete")

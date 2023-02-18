@@ -39,14 +39,12 @@ public class DeleteAlerteBSController {
         }
         deleteAlertes.add("ids_alertes", idsAlertes);
 
-        System.out.println(deleteAlertes);
         Call<ReponseApi> deleteAlerte = this.iBeSafeAPI.deleteAlerte(deleteAlertes);
         this.onPreExecute();
         deleteAlerte.enqueue(new Callback<ReponseApi>() {
             @Override
             public void onResponse(@NonNull Call<ReponseApi> call, @NonNull Response<ReponseApi> response) {
                 ReponseApi reponseApi = response.body();
-                System.out.println(response);
                 if(reponseApi != null){
                     boolean success = reponseApi.isSuccess();
                     view.resultDeleteAlerte(success);
